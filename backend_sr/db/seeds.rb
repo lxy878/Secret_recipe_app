@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 Unit.destroy_all()
 Ingredient.destroy_all()
+Meal.destroy_all()
 
 lb = Unit.create(name: 'lb')
 cup = Unit.create(name: 'cup')
@@ -17,4 +18,6 @@ evoo = Ingredient.create(name: 'extra-virgin olive oil')
 ss = Ingredient.create(name: 'sea salt')
 ley = Ingredient.create(name: 'large egg yolks')
 
-
+breakfast = Meal.create(name: 'breakfast')
+lunch = Meal.create(name: 'lunch')
+dinner = Meal.create(name: 'dinner')
