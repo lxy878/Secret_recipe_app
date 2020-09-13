@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Unit.destroy_all()
+
+lb = Unit.create(name: 'lb')
+cup = Unit.create(name: 'cup')
+teaspoon = Unit.create(name: 'teaspoon')
