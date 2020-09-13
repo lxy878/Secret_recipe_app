@@ -12,20 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2020_09_13_062219) do
 
-  create_table "ingredient_units", force: :cascade do |t|
-    t.float "qty"
-    t.integer "unit_id"
-    t.integer "ingredient_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ingredient_id"], name: "index_ingredient_units_on_ingredient_id"
-    t.index ["unit_id"], name: "index_ingredient_units_on_unit_id"
-  end
-
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
+    t.float "qty"
+    t.integer "unit_id"
+    t.integer "recipe_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
+    t.index ["unit_id"], name: "index_ingredients_on_unit_id"
   end
 
   create_table "meals", force: :cascade do |t|
@@ -39,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_062219) do
     t.string "serving"
     t.string "image_url"
     t.string "directions"
-    t.integer "meal_id", null: false
+    t.integer "meal_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["meal_id"], name: "index_recipes_on_meal_id"
@@ -51,5 +46,4 @@ ActiveRecord::Schema.define(version: 2020_09_13_062219) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "recipes", "meals"
 end

@@ -5,7 +5,7 @@ class CreateRecipes < ActiveRecord::Migration[6.0]
       t.string :serving
       t.string :image_url
       t.string :directions
-      t.belongs_to :meal, null: false, foreign_key: true
+      t.belongs_to :meal
 
       t.timestamps
     end
