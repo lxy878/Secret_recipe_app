@@ -2,25 +2,21 @@ class RecipesController < ApplicationController
 
     def index
         recipes = Recipe.all
-        # binding.pry
-              # [
-        #     {
-        #         id:1,
-        #         name:'',
-        #         serving:'01',
-        #         image_url:'',
-        #         direction:'',
-        #         meal: recipe.meal,
-        #     }, 
-        #     {......}
-        # ]
-        render json: recipes.to_json(except: [:directions, :created_at, :updated_at])
+        # fix: move to model
+        render json: recipes.to_json(
+            include:{
+                meal: {
+                    only: [:name, :id]
+                }
+            }, except: [:meal_id, :created_at, :updated_at]
+        )
     end
 
     def show
         recipe = Recipe.find_by(id: params[:id])
 
         if recipe
+            # fix: move to model
             render json: recipe.to_json(include: {
                 meal: {
                     only: [:name, :id]
