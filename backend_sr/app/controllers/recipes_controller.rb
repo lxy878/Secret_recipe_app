@@ -18,25 +18,25 @@ class RecipesController < ApplicationController
     end
 
     def show
-              # [
-        #     {
-        #         id:1,
-        #         name:'',
-        #         serving:'01',
-        #         image_url:'',
-        #         direction:'',
-        #         meal: recipe.meal,
-        #         ingredients:[
-        #             {
-        #                 id:1,
-        #                 name:'',
-        #                 qty:1,
-        #                 unit: ingredient.unit
-        #             }, .....
-        #         ]
-        #     }, 
-        #     {......}
-        # ]
+        recipe = Recipe.find_by(id: params[:id])
+
+        if recipe
+            render json: recipe.to_json(include: {
+                meal: {
+                    only: [:name, :id]
+                },
+                ingredients: {
+                    include: {
+                        unit:{
+                            only: [:id, :name]
+                        }
+                    },
+                    only: [:id, :name, :qty]
+                }
+            }, except: [:created_at, :updated_at, :meal_id])
+        else
+            render json: {message: 'error'}
+        end
     end
 
     def create
