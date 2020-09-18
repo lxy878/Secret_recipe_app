@@ -1,1 +1,1 @@
-new Recipe().getRecipes()
+new Recipes().getRecipes()

@@ -1,14 +1,11 @@
 class Recipe{
-    constructor(){
-        this.recipes = []
-        this.server = new Server()
+    constructor(recipe){
+        this.id = recipe.id;
+        this.directions = recipe.directions;
+        this.name = recipe.name;
+        this.imageUrl = recipe.image_url;
+        this.serving = recipe.serving;
+        this.meal = recipe.meal;
+        this.ingrdients = recipe.ingrdients;
     }
-
-    getRecipes(){
-        this.server.fetchForRecipes().then(json=>{
-            console.log(json)
-        })
-    }
-
-    
 }
