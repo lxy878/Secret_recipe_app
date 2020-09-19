@@ -1,0 +1,145 @@
+body {
+    padding-bottom: 100px;
+    background-color: rgb(245, 249, 250);
+    font-family: Book Antiqua,Palatino,Palatino Linotype,Palatino LT STD,Georgia,serif;
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+
+.center {
+    text-align: center;
+  }
+  
+.content{
+    padding: 0em 5.5em;
+}
+
+.content_center{
+    display: inline-block;
+    text-align: left;
+}
+
+.info, .info_commercial{
+    text-align: left;
+    padding: 20px;
+    margin: 10px;
+    display: inline-block;
+}
+
+.info{
+    background-color: #eeeeee;
+    border-radius: 7px;
+    vertical-align: middle;
+}
+
+.info_commercial{
+    background-color: rgb(233, 238, 110);
+    border-radius: 10px;
+    vertical-align: top;
+}
+
+.error_message{
+    color: red; 
+}
+
+.field_with_errors {
+    padding: 2px;
+    background-color: red;
+    display: inline;
+}
+
+/* -------------------- */
+
+#nav-header{
+    width: 100%;
+    height: 3em;
+}
+
+#nav-items {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    float: right;
+}
+/* 
+#nav-items li{
+    width: 100%;
+} */
+li button {
+    width: 100%;
+    display: block;
+    color: white;
+    background-color: #333;
+    /* text-align: center;
+    align-items: center; */
+    padding: 15px 0px;
+    text-decoration: none;
+}
+
+li button:hover {
+    background-color: rgb(13, 87, 35);
+}
+
+
+
+#recipes_container{
+    margin: 10px 5px;
+}
+
+#word_wrap{
+    margin: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    max-width: 100%;
+    line-height: 20px;
+    max-height: 40px;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+
+#inform{
+    margin: 0px;
+}
+
+#item_buttons{
+    margin-top: 10px;
+}
+
+#item{
+    width: 30%;
+    display: inline-block;
+    margin: 10px;
+    border: black solid 1px;
+    border-radius: 4px;
+}
+
+#item img{
+    width: 100%;
+}
+
+.extend_container{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+}
+
+#recipe_container{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 3;
+}
+/* extend nav */
+.extend{
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+#item-detail{
+    padding: 5px 8px;
+    height: 10%;
+}

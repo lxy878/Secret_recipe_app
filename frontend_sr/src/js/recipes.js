@@ -22,10 +22,12 @@ class Recipes{
                 <img src=${recipe.imageUrl} alt="Image">
                 <div id='item-detail'>
                     <h4 id='word_wrap'>${recipe.name}</h4>
-                    <p>serving: ${recipe.serving}</p>
-                    <p>meal: ${recipe.meal.name}</p>
-                    <button>View</button>
-                    <button>Delete</button>
+                    <p id='inform'>serving: ${recipe.serving}</p>
+                    <p id='inform'>meal: ${recipe.meal.name}</p>
+                    <div id='item_buttons'>
+                        <button>View</button>
+                        <button>Delete</button>
+                    <div>
                 </div>
             `
             // addEventListener for view and delete
