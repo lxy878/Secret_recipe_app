@@ -55,6 +55,48 @@ class Recipes{
         })
     }
 
+    removeCreateForm(element){
+        element.removeChild(element.firstChild)
+    }
+
+    addCreateForm(element){
+        element.innerHTML = `
+            <form action="POST" id='createField'>
+                <p>Name: <input type="text" id='name'></p>
+                <p>Meal: <input type="text" id='meal'></p>
+                <p>Serving: <input type="text" id='serving'></p>
+                <p>Image Link: <input type="text" id='image_url'></p>
+                <div id='ingredients'>
+                    <p>Ingredients:</p>
+                </div>
+                <br>
+                <button id='add_ingredient'>More ingredient</button>
+                <p>Directions: <textarea  id='directions'></textarea></p>
+                <input type="submit" value='Create'><br>
+        </div>`
+        this.addIngEvent();
+        // this.addSubmitEvent();
+    }
+    
+    addSubmitEvent(){
+        
+    }
+    
+    addIngEvent(){
+        const buttonAddIng = document.querySelector('button#add_ingredient')
+        buttonAddIng.addEventListener('click', e=>{
+            e.preventDefault();
+            const divIngs = document.querySelector('div#ingredients')
+            const newDiv = document.createElement('div');
+            newDiv.id = 'ingredient'
+            newDiv.innerHTML = `            
+                <p>Name: <input type="text" id='name'></p>
+                <p>Qty: <input type="number" id='qty'></p>
+                <p>Unit: <input type="text" id='Unit'></p>`
+            divIngs.appendChild(newDiv)
+        })
+    }
+
     getRecipe(){
         console.log()
     }
