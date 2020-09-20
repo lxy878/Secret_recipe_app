@@ -1,7 +1,8 @@
 class Recipes{
     constructor(){
-        this.recipes = []
-        this.server = new Server()
+        this.recipes = [];
+        this.server = new Server();
+        this.createButton();
     }
 
     getRecipes(){
@@ -34,7 +35,26 @@ class Recipes{
             recipeContainer.appendChild(divTag);
         })
     }
-    
+
+    createButton(){
+        const createButton = document.querySelector('#create_button');
+        createButton.addEventListener('click', e=>{
+            const element = e.target;
+            const divForm = document.querySelector('div#form_render')
+            const recipesContainer = document.querySelector('#recipes_container');
+            if(element.innerText === 'Cancel'){
+                element.innerText = 'Create New Recipe';
+                recipesContainer.className = 'extend_container';
+                this.removeCreateForm(divForm);
+            }else{
+                element.innerText = 'Cancel';
+                this.addCreateForm(divForm);
+                recipesContainer.className ='';
+            }
+            
+        })
+    }
+
     getRecipe(){
         console.log()
     }
