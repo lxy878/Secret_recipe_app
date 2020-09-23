@@ -15,12 +15,11 @@ ActiveRecord::Schema.define(version: 2020_09_13_062219) do
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
     t.float "qty"
-    t.integer "unit_id"
+    t.string "unit"
     t.integer "recipe_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
-    t.index ["unit_id"], name: "index_ingredients_on_unit_id"
   end
 
   create_table "meals", force: :cascade do |t|
@@ -38,12 +37,6 @@ ActiveRecord::Schema.define(version: 2020_09_13_062219) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["meal_id"], name: "index_recipes_on_meal_id"
-  end
-
-  create_table "units", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

@@ -1,11 +1,23 @@
 class Server{
     constructor(){
-        this.baseUrl = 'http://localhost:3000'
+        this.baseUrl = 'http://localhost:3000/recipes/'
     }
 
     fetchForRecipes(){
-        // test 
-        this.recipesUrl = this.baseUrl + '/recipes'
-        return fetch(`${this.baseUrl}/recipes`).then(resp => resp.json())
+        return fetch(this.baseUrl).then(resp => resp.json())
+    }
+
+    fetchForCreate(data){
+        const recipe = {
+            'recipe': data
+        }
+        return fetch(this.baseUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(resp => resp.json())
     }
 }

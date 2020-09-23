@@ -3,7 +3,7 @@ class CreateIngredients < ActiveRecord::Migration[6.0]
     create_table :ingredients do |t|
       t.string :name
       t.float :qty
-      t.belongs_to :unit
+      t.string :unit
       t.belongs_to :recipe
       t.timestamps
     end

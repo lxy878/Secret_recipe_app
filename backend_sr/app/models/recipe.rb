@@ -1,5 +1,10 @@
 class Recipe < ApplicationRecord
   belongs_to :meal
   has_many :ingredients
-  has_many :unit, through: :ingredients
+
+  def create_ingredients(params)
+    params[:ingredients].each do |ingredient|
+      self.ingredients.build(ingredient)
+    end
+  end
 end

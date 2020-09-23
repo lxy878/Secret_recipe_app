@@ -3,23 +3,25 @@ class Recipes{
         this.recipes = [];
         this.server = new Server();
         this.createButton();
+        // get recipe 
     }
 
+    // show all recipes 
     getRecipes(){
         this.server.fetchForRecipes().then(json=>{
             json.forEach(recipe => this.recipes.push(new Recipe(recipe)));
         }).then(()=>{
-            this.render()
+            this.renderRecipes()
         })
     }
 
-    render(){
+    renderRecipes(){
         const recipeContainer = document.getElementById('recipes_container')
-        const recipe = this.recipes[0]
         this.recipes.forEach(recipe =>{
-            const divTag = document.createElement('div')
-            divTag.id = 'item'
-            divTag.innerHTML = `
+            const newDiv = document.createElement('div')
+            newDiv.id = 'item'
+            newDiv.className = recipe.id
+            newDiv.innerHTML = `
                 <img src=${recipe.imageUrl} alt="Image">
                 <div id='item-detail'>
                     <h4 id='word_wrap'>${recipe.name}</h4>
@@ -30,12 +32,13 @@ class Recipes{
                         <button>Delete</button>
                     <div>
                 </div>
-            `
+            `;
             // addEventListener for view and delete
-            recipeContainer.appendChild(divTag);
+            recipeContainer.appendChild(newDiv);
         })
     }
 
+    // create a recipe
     createButton(){
         const createButton = document.querySelector('#create_button');
         createButton.addEventListener('click', e=>{
@@ -61,27 +64,56 @@ class Recipes{
 
     addCreateForm(element){
         element.innerHTML = `
-            <form action="POST" id='createField'>
-                <p>Name: <input type="text" id='name'></p>
-                <p>Meal: <input type="text" id='meal'></p>
-                <p>Serving: <input type="text" id='serving'></p>
-                <p>Image Link: <input type="text" id='image_url'></p>
-                <div id='ingredients'>
-                    <p>Ingredients:</p>
-                </div>
-                <br>
-                <button id='add_ingredient'>More ingredient</button>
-                <p>Directions: <textarea  id='directions'></textarea></p>
-                <input type="submit" value='Create'><br>
-        </div>`
+            <form id='createField'>
+                <p>Name: <input type="text" id='recipe_name'></p>
+                <p>Meal: <input type="text" id='recipe_meal'></p>
+                <p>Serving: <input type="text" id='recipe_serving'></p>
+                <p>Image Link: <input type="text" id='recipe_image_url'></p>
+                <div id='ingredients'><p>Ingredients:</p></div><br>
+                <button id='add_ingredient'>More ingredients</button>
+                <p>Directions: <textarea  id='recipe_directions'></textarea></p>
+                <input type='submit', value='Create'>
+            </form>
+        `;
         this.addIngEvent();
-        // this.addSubmitEvent();
+        this.addSubmitEvent();
     }
     
     addSubmitEvent(){
-        
+        document.querySelector('form#createField').addEventListener('submit', e=>{
+            e.preventDefault();
+            const form = e.target
+            const packege = this.collectData(form);
+            // Post data
+            this.server.fetchForCreate(packege).then(json=>console.log(json))
+            // this.removeCreateForm()
+            document.querySelector('button#create_button').innerText = 'Create New Recipe';
+            document.querySelector('#recipes_container').className = 'extend_container'
+            this.removeCreateForm(document.querySelector('div#form_render'));
+        })
     }
-    
+
+    collectData(form){
+        const data = {'recipe':{}, 'meal':{}}
+        // collect recipe attributes
+        form.querySelectorAll(`[id*=recipe]`).forEach(e=> {
+            const key = e.id.split('recipe_')[1]
+            if(key === 'meal'){
+                data[key] = {name: e.value}
+            }else{
+                data.recipe[key] = e.value
+            }
+        })
+        data.ingredients = []
+        // collect ingredients' attributes
+        form.querySelectorAll(`[id=ingredient]`).forEach(ingredient=>{
+            const newIng = {}
+            ingredient.querySelectorAll(`[id*=ingredient]`).forEach(e => newIng[e.id.split('ingredient_')[1]] = e.value)
+            data.ingredients.push(newIng)
+        })
+        return data
+    }
+
     addIngEvent(){
         const buttonAddIng = document.querySelector('button#add_ingredient')
         buttonAddIng.addEventListener('click', e=>{
@@ -90,13 +122,15 @@ class Recipes{
             const newDiv = document.createElement('div');
             newDiv.id = 'ingredient'
             newDiv.innerHTML = `            
-                <p>Name: <input type="text" id='name'></p>
-                <p>Qty: <input type="number" id='qty'></p>
-                <p>Unit: <input type="text" id='Unit'></p>`
+                <p>Name: <input type="text" id='ingredient_name' ></p>
+                <p>Qty: <input type="number" id='ingredient_qty' ></p>
+                <p>Unit: <input type="text" id='ingredient_unit'></p>
+            `;
             divIngs.appendChild(newDiv)
         })
     }
 
+    
     getRecipe(){
         console.log()
     }
