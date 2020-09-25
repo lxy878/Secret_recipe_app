@@ -8,6 +8,7 @@ class Recipes{
 
     // show all recipes 
     getRecipes(){
+        // refresh issue
         this.server.fetchForRecipes().then(json=>{
             this.recipes =[];
             json.forEach(recipe => {
@@ -57,7 +58,7 @@ class Recipes{
         const recipeContainer = document.getElementById('recipe_container')
         recipeContainer.innerHTML = ''
         recipeContainer.hidden = false;
-        // console.log(recipe)
+        recipeContainer.className = recipe.id
         recipeContainer.innerHTML = `
             <h1 id='recipe_title'>${recipe.name}</h1>
             <img src="${recipe.imageUrl}" alt="No Image" id='recipe_image'>
@@ -82,11 +83,19 @@ class Recipes{
         })
     }
 
+    // delete a recipe
     addEventDelete(div){
         const buttonDelete = document.createElement('button')
+        const recipeContainer = document.getElementById('recipe_container')
         buttonDelete.innerText = 'Delete'
         buttonDelete.addEventListener('click', e=>{
-            console.log(e.target.innerText)
+            const id = e.target.parentElement.className
+            this.server.fetchForDelete(id).then(json => alert(`${json.message}`))
+            if (id === recipeContainer.className){
+                recipeContainer.hidden = true;
+                recipeContainer.innerHTML = '';
+            }
+            this.getRecipes()
         })
         div.appendChild(buttonDelete)
     }
@@ -119,7 +128,7 @@ class Recipes{
         element.innerHTML = `
             <form id='createField'>
                 <p>Name: <input type="text" id='recipe_name'></p>
-                <p>Meal: <input type="text" id='recipe_meal'></p>
+                <p>Meal: <input type="text" id='recipe_meal' required></p>
                 <p>Serving: <input type="text" id='recipe_serving'></p>
                 <p>Image Link: <input type="text" id='recipe_image_url'></p>
                 <div id='ingredients'><p>Ingredients:</p></div><br>

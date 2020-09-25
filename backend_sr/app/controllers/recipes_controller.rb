@@ -14,7 +14,6 @@ class RecipesController < ApplicationController
 
     def show
         recipe = Recipe.find_by(id: params[:id])
-        # binding.pry
         if recipe
             # fix: move to model
             render json: recipe.to_json(include: {
@@ -53,6 +52,13 @@ class RecipesController < ApplicationController
     end
 
     def destroy
+        recipe = Recipe.find_by(id: params[:id])
+        if recipe
+            recipe.destroy
+            render json: {message: 'Destroy'}.to_json()
+        else
+            render json: {message: 'error'}.to_json()
+        end
 
     end
 
