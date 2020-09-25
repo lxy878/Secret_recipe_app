@@ -3,20 +3,25 @@ class Recipes{
         this.recipes = [];
         this.server = new Server();
         this.createButton();
+        this.c = 0;
         // get recipe 
     }
 
     // show all recipes 
     getRecipes(){
         this.server.fetchForRecipes().then(json=>{
-            json.forEach(recipe => this.recipes.push(new Recipe(recipe)));
+            this.recipes =[];
+            json.forEach(recipe => {
+                this.recipes.push(new Recipe(recipe)); 
+            });
         }).then(()=>{
             this.renderRecipes()
         })
     }
 
     renderRecipes(){
-        const recipeContainer = document.getElementById('recipes_container')
+        const recipesContainer = document.getElementById('recipes_container')
+        recipesContainer.innerHTML = ''
         this.recipes.forEach(recipe =>{
             const newDiv = document.createElement('div')
             newDiv.id = 'item'
@@ -27,15 +32,34 @@ class Recipes{
                     <h4 id='word_wrap'>${recipe.name}</h4>
                     <p id='inform'>serving: ${recipe.serving}</p>
                     <p id='inform'>meal: ${recipe.meal.name}</p>
-                    <div id='item_buttons'>
-                        <button>View</button>
-                        <button>Delete</button>
-                    <div>
+                    <div id='item_buttons'><div>
                 </div>
             `;
-            // addEventListener for view and delete
-            recipeContainer.appendChild(newDiv);
+            
+            const divButtons = newDiv.querySelector('div#item_buttons')
+            this.addEventView(divButtons)
+            this.addEventDelete(divButtons)
+
+            recipesContainer.appendChild(newDiv);
         })
+    }
+
+    addEventView(div){
+        const buttonView = document.createElement('button')
+        buttonView.innerText = 'View'
+        buttonView.addEventListener('click', e=>{
+            console.log(e.target.innerText)
+        })
+        div.appendChild(buttonView)
+    }
+
+    addEventDelete(div){
+        const buttonDelete = document.createElement('button')
+        buttonDelete.innerText = 'Delete'
+        buttonDelete.addEventListener('click', e=>{
+            console.log(e.target.innerText)
+        })
+        div.appendChild(buttonDelete)
     }
 
     // create a recipe
@@ -59,7 +83,7 @@ class Recipes{
     }
 
     removeCreateForm(element){
-        element.removeChild(element.firstChild)
+        element.removeChild(element.firstElementChild)
     }
 
     addCreateForm(element){
@@ -86,10 +110,10 @@ class Recipes{
             const packege = this.collectData(form);
             // Post data
             this.server.fetchForCreate(packege).then(json=>console.log(json))
-            // this.removeCreateForm()
             document.querySelector('button#create_button').innerText = 'Create New Recipe';
             document.querySelector('#recipes_container').className = 'extend_container'
             this.removeCreateForm(document.querySelector('div#form_render'));
+            this.getRecipes();
         })
     }
 
@@ -128,10 +152,5 @@ class Recipes{
             `;
             divIngs.appendChild(newDiv)
         })
-    }
-
-    
-    getRecipe(){
-        console.log()
     }
 }
