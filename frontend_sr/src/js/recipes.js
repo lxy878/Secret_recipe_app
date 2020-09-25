@@ -3,7 +3,6 @@ class Recipes{
         this.recipes = [];
         this.server = new Server();
         this.createButton();
-        this.c = 0;
         // get recipe 
     }
 
@@ -25,14 +24,13 @@ class Recipes{
         this.recipes.forEach(recipe =>{
             const newDiv = document.createElement('div')
             newDiv.id = 'item'
-            newDiv.className = recipe.id
             newDiv.innerHTML = `
                 <img src=${recipe.imageUrl} alt="Image">
                 <div id='item-detail'>
                     <h4 id='word_wrap'>${recipe.name}</h4>
                     <p id='inform'>serving: ${recipe.serving}</p>
                     <p id='inform'>meal: ${recipe.meal.name}</p>
-                    <div id='item_buttons'><div>
+                    <div id='item_buttons' class='${recipe.id}'><div>
                 </div>
             `;
             
@@ -44,13 +42,44 @@ class Recipes{
         })
     }
 
+    // show a recipe
     addEventView(div){
         const buttonView = document.createElement('button')
         buttonView.innerText = 'View'
         buttonView.addEventListener('click', e=>{
-            console.log(e.target.innerText)
+            const id = e.target.parentElement.className
+            this.server.fetchForRecipe(id).then(json=> this.renderRecipe(new Recipe(json)))
         })
         div.appendChild(buttonView)
+    }
+
+    renderRecipe(recipe){
+        const recipeContainer = document.getElementById('recipe_container')
+        recipeContainer.innerHTML = ''
+        recipeContainer.hidden = false;
+        // console.log(recipe)
+        recipeContainer.innerHTML = `
+            <h1 id='recipe_title'>${recipe.name}</h1>
+            <img src="${recipe.imageUrl}" alt="No Image" id='recipe_image'>
+            <div id='recipe_details'>
+                <p><strong><span>Meal: </span></strong>${recipe.meal.name}</p>
+                <p><strong><span>Serving People: </span></strong> ${recipe.serving}</p>
+            </div>
+
+            <div id='recipe_details'>
+                <h3>Ingredients:</h3>
+                <ul id='ingredients'>
+                </ul>
+                <h3>Directions: </h3>
+                <p id='directions'>${recipe.directions}</p>
+            </div>
+        `
+        const ingsList = recipeContainer.querySelector('ul#ingredients')
+        recipe.ingredients.forEach(ing => {
+            const li = document.createElement('li')
+            li.innerHTML = `<li>${ing.name} (<strong><span>${ing.qty}</span> <span>${ing.unit}</span></strong>)</li>`
+            ingsList.appendChild(li)
+        })
     }
 
     addEventDelete(div){
@@ -113,6 +142,7 @@ class Recipes{
             document.querySelector('button#create_button').innerText = 'Create New Recipe';
             document.querySelector('#recipes_container').className = 'extend_container'
             this.removeCreateForm(document.querySelector('div#form_render'));
+            // fix not fresh
             this.getRecipes();
         })
     }
@@ -123,8 +153,10 @@ class Recipes{
         form.querySelectorAll(`[id*=recipe]`).forEach(e=> {
             const key = e.id.split('recipe_')[1]
             if(key === 'meal'){
+                // if meal is empty
                 data[key] = {name: e.value}
             }else{
+                // the attribute is empty
                 data.recipe[key] = e.value
             }
         })

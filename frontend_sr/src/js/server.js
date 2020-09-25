@@ -20,4 +20,8 @@ class Server{
             body: JSON.stringify(data)
         }).then(resp => resp.json())
     }
+
+    fetchForRecipe(id){
+        return fetch(this.baseUrl+`${id}`).then(resp=>resp.json())
+    }
 }

@@ -85,9 +85,6 @@ li button:hover {
     padding: 20px;
     /* text-align: center; */
 }
-#ingredients{
-    /* margin: 10px; */
-}
 
 #ingredients #ingredient{
     padding: 0px 10px;
@@ -141,14 +138,48 @@ textarea#recipe_directions{
     grid-row-start: 2;
 }
 
+#item-detail{
+    padding: 5px 8px;
+    height: 10%;
+}
+
 #recipe_container{
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 3;
-    text-align: center;
+    margin-top: 10px;
+    padding: 20px 0px;
+    border-radius: 1em;
+    background-color: burlywood;
 }
 
-#item-detail{
-    padding: 5px 8px;
-    height: 10%;
+#recipe_container > #recipe_title{
+    /* font-size: 20px; */
+    font-family: American Typewriter, serif;
+    font-weight: normal;
+    font-style: italic;
+    text-align: center;
+    padding: 0px 200px;
+}
+
+#recipe_image{
+    /* display: inline; */
+    width: 60%;
+    padding: 0px 15em;
+    /* text-align: center; */
+    /* float: left; */
+}
+
+#recipe_details{
+    margin: auto 15em;
+}
+
+
+#recipe_datails li, ul, #directions{
+    padding-left: 1em;
+    list-style-type: none;
+}
+
+#recipe_container #directions{
+    
 }

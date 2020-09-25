@@ -6,6 +6,6 @@ class Recipe{
         this.imageUrl = recipe.image_url;
         this.serving = recipe.serving;
         this.meal = recipe.meal;
-        this.ingrdients = recipe.ingrdients;
+        this.ingredients = recipe.ingredients;
     }
 }

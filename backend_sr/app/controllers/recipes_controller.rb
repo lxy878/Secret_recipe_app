@@ -14,7 +14,7 @@ class RecipesController < ApplicationController
 
     def show
         recipe = Recipe.find_by(id: params[:id])
-
+        # binding.pry
         if recipe
             # fix: move to model
             render json: recipe.to_json(include: {
@@ -22,20 +22,17 @@ class RecipesController < ApplicationController
                     only: [:name, :id]
                 },
                 ingredients: {
-                    include: {
-                        unit:{
-                            only: [:id, :name]
-                        }
-                    },
-                    only: [:id, :name, :qty]
+                    only: [:id, :name, :qty, :unit]
                 }
-            }, except: [:created_at, :updated_at, :meal_id])
+            }, 
+            except: [:created_at, :updated_at, :meal_id])
         else
             render json: {message: 'error'}
         end
     end
 
     def create
+        # refactor and fix when image and meal are empty
         # find or create meal
         meal = Meal.find_or_create_by(meal_params)
         newRecipe = Recipe.new(recipe_params)
