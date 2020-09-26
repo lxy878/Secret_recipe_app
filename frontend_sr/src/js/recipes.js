@@ -10,7 +10,6 @@ class Recipes{
     getRecipes(){
         // refresh issue
         this.server.fetchForRecipes().then(json=>{
-            this.recipes =[];
             json.forEach(recipe => {
                 this.recipes.push(new Recipe(recipe)); 
             });
@@ -22,7 +21,7 @@ class Recipes{
     renderRecipes(){
         const recipesContainer = document.getElementById('recipes_container')
         recipesContainer.innerHTML = ''
-        this.recipes.forEach(recipe =>{
+        this.recipes.forEach((recipe, index) =>{
             const newDiv = document.createElement('div')
             newDiv.id = 'item'
             newDiv.innerHTML = `
@@ -31,10 +30,9 @@ class Recipes{
                     <h4 id='word_wrap'>${recipe.name}</h4>
                     <p id='inform'>serving: ${recipe.serving}</p>
                     <p id='inform'>meal: ${recipe.meal.name}</p>
-                    <div id='item_buttons' class='${recipe.id}'><div>
+                    <div id='item_buttons' class='${recipe.id}' array_index='${index}'><div>
                 </div>
-            `;
-            
+            `;  
             const divButtons = newDiv.querySelector('div#item_buttons')
             this.addEventView(divButtons)
             this.addEventDelete(divButtons)
@@ -90,12 +88,20 @@ class Recipes{
         buttonDelete.innerText = 'Delete'
         buttonDelete.addEventListener('click', e=>{
             const id = e.target.parentElement.className
-            this.server.fetchForDelete(id).then(json => alert(`${json.message}`))
+            
+            this.server.fetchForDelete(id).then(json => {
+                if (json.message){
+                    alert(json.message)
+                    this.recipes.splice(e.target.parentElement.getAttribute('array_index'), 1)
+                    this.renderRecipes()
+                }else{
+                    alert(json.error)
+                }
+            })
             if (id === recipeContainer.className){
                 recipeContainer.hidden = true;
                 recipeContainer.innerHTML = '';
             }
-            this.getRecipes()
         })
         div.appendChild(buttonDelete)
     }
@@ -147,12 +153,14 @@ class Recipes{
             const form = e.target
             const packege = this.collectData(form);
             // Post data
-            this.server.fetchForCreate(packege).then(json=>console.log(json))
+            this.server.fetchForCreate(packege).then(json=>{
+                this.recipes.push(new Recipe(json))
+                this.renderRecipes();
+            })
+
             document.querySelector('button#create_button').innerText = 'Create New Recipe';
             document.querySelector('#recipes_container').className = 'extend_container'
             this.removeCreateForm(document.querySelector('div#form_render'));
-            // fix not fresh
-            this.getRecipes();
         })
     }
 

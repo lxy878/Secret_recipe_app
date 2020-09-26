@@ -41,7 +41,14 @@ class RecipesController < ApplicationController
         newRecipe.create_ingredients(ingredients_params)
 
         if newRecipe.save
-            render json: newRecipe.to_json()
+        # fix: move to model
+            render json: recipes.to_json(
+                include:{
+                    meal: {
+                        only: [:name, :id]
+                    }
+                }, except: [:meal_id, :created_at, :updated_at]
+            )
         else
             render json: {message: 'error'}
         end
@@ -54,10 +61,12 @@ class RecipesController < ApplicationController
     def destroy
         recipe = Recipe.find_by(id: params[:id])
         if recipe
+            name = recipe.name
             recipe.destroy
-            render json: {message: 'Destroy'}.to_json()
+            render json: {message: "#{name} is deleted"}
         else
-            render json: {message: 'error'}.to_json()
+            # add details
+            render json: {error: 'Something wrong'}.to_json()
         end
 
     end

@@ -31,7 +31,7 @@ class Server{
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-            }
+            },
         }).then(resp=> resp.json())
     }
 }
