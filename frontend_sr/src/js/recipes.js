@@ -8,14 +8,11 @@ class Recipes{
 
     // show all recipes 
     getRecipes(){
-        // refresh issue
         this.server.fetchForRecipes().then(json=>{
             json.forEach(recipe => {
                 this.recipes.push(new Recipe(recipe)); 
             });
-        }).then(()=>{
-            this.renderRecipes()
-        })
+        }).then(()=>this.renderRecipes())
     }
 
     renderRecipes(){
@@ -24,6 +21,7 @@ class Recipes{
         this.recipes.forEach((recipe, index) =>{
             const newDiv = document.createElement('div')
             newDiv.id = 'item'
+            // move to object
             newDiv.innerHTML = `
                 <img src=${recipe.imageUrl} alt="Image">
                 <div id='item-detail'>
@@ -57,6 +55,7 @@ class Recipes{
         recipeContainer.innerHTML = ''
         recipeContainer.hidden = false;
         recipeContainer.className = recipe.id
+        // move to object
         recipeContainer.innerHTML = `
             <h1 id='recipe_title'>${recipe.name}</h1>
             <img src="${recipe.imageUrl}" alt="No Image" id='recipe_image'>
@@ -131,6 +130,7 @@ class Recipes{
     }
 
     addCreateForm(element){
+        // move to object
         element.innerHTML = `
             <form id='createField'>
                 <p>Name: <input type="text" id='recipe_name'></p>
@@ -145,6 +145,22 @@ class Recipes{
         `;
         this.addIngEvent();
         this.addSubmitEvent();
+    }
+    
+    addIngEvent(){
+        const buttonAddIng = document.querySelector('button#add_ingredient')
+        buttonAddIng.addEventListener('click', e=>{
+            e.preventDefault();
+            const divIngs = document.querySelector('div#ingredients')
+            const newDiv = document.createElement('div');
+            newDiv.id = 'ingredient'
+            newDiv.innerHTML = `            
+                <p>Name: <input type="text" id='ingredient_name' ></p>
+                <p>Qty: <input type="number" id='ingredient_qty' ></p>
+                <p>Unit: <input type="text" id='ingredient_unit'></p>
+            `;
+            divIngs.appendChild(newDiv)
+        })
     }
     
     addSubmitEvent(){
@@ -187,19 +203,4 @@ class Recipes{
         return data
     }
 
-    addIngEvent(){
-        const buttonAddIng = document.querySelector('button#add_ingredient')
-        buttonAddIng.addEventListener('click', e=>{
-            e.preventDefault();
-            const divIngs = document.querySelector('div#ingredients')
-            const newDiv = document.createElement('div');
-            newDiv.id = 'ingredient'
-            newDiv.innerHTML = `            
-                <p>Name: <input type="text" id='ingredient_name' ></p>
-                <p>Qty: <input type="number" id='ingredient_qty' ></p>
-                <p>Unit: <input type="text" id='ingredient_unit'></p>
-            `;
-            divIngs.appendChild(newDiv)
-        })
-    }
 }
