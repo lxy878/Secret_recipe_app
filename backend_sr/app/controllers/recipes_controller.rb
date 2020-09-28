@@ -26,7 +26,7 @@ class RecipesController < ApplicationController
             }, 
             except: [:created_at, :updated_at, :meal_id])
         else
-            render json: {message: 'error'}
+            render json: {error: "Recipe doesn't exist."}.to_json()
         end
     end
 
@@ -49,23 +49,17 @@ class RecipesController < ApplicationController
                 }, except: [:meal_id, :created_at, :updated_at]
             )
         else
-            render json: {message: 'error'}
+            render json: {error: 'Create new recipe failed'}.to_json()
         end
-    end
-
-    def update
-
     end
 
     def destroy
         recipe = Recipe.find_by(id: params[:id])
         if recipe
-            name = recipe.name
             recipe.destroy
-            render json: {message: "Deleted"}
+            render json: {message: "Recipe deleted"}.to_json()
         else
-            # TODO: add details
-            render json: {error: 'Something wrong'}.to_json()
+            render json: {error: 'Delete recipe failed'}.to_json()
         end
 
     end

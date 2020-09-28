@@ -19,22 +19,17 @@ main{
 }
 
 #nav-items {
-    /* list-style-type: none; */
+    list-style-type: none;
     width: 100%;
     margin: 0;
     padding: 0;
-    /* overflow: hidden;
-    background-color: #333;
-    float: right; */
 }
 
 li > button {
     width: 100%;
-    /* display: block; */
     color: white;
     background-color: #333;
     padding: 15px 0px;
-    text-decoration: none;
 }
 
 li button:hover {
@@ -44,7 +39,6 @@ li button:hover {
 
 #createField{
     background-color: rgb(183, 295, 114);
-    border: 1px solid black;
     padding: 20px;
 }
 
@@ -52,7 +46,7 @@ li button:hover {
     width: 100%;
 }
 
-#ingredients #ingredient{
+#ingredients #ingredient, #createField{
     padding: 0px 10px;
     border: solid black 1px;
 }
@@ -62,6 +56,7 @@ textarea#recipe_directions{
     height: 100px;
     resize: none;
 }
+
 #recipes_container{
     margin: 10px 5px;
 }
@@ -71,29 +66,19 @@ textarea#recipe_directions{
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    /* max-width: 100%; */
-    line-height: 20px;
     max-height: 40px;
-    /* -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical; */
 }
+
 #word_wrap, #inform{
-    /* margin: 0; */
     text-overflow: ellipsis;
     overflow: hidden;
+    line-height: 20px;
     display: -webkit-box;
-    /* line-height: 20px;
-    max-height: 40px;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical; */
-    /* max-width: 100%; */
 }
+
 #inform{
     margin: 0;
-    line-height: 20px;
     max-height: 20px;
-    /* -webkit-line-clamp: 6; */
-    /* -webkit-box-orient: vertical; */
 }
 
 #item_buttons{
@@ -121,7 +106,6 @@ textarea#recipe_directions{
 
 #item-detail{
     padding: 5px 8px;
-    /* height: 10%; */
 }
 
 #recipe_container{
@@ -132,18 +116,14 @@ textarea#recipe_directions{
 }
 
 #recipe_container > #recipe_title{
-    /* font-size: 20px; */
     font-family: American Typewriter, serif;
     font-weight: normal;
     font-style: italic;
-    /* text-align: center; */
     padding: 0px 200px;
 }
 
 #recipe_container > #recipe_image{
-    /* width: 300px; */
     height: 450px;
-    /* padding: 0px 15em; */
 }
 
 #recipe_details{
@@ -152,8 +132,7 @@ textarea#recipe_directions{
     border-bottom: gray 1px solid;
 }
 
-
-#recipe_datails li, ul, #directions{
+ul#ingredients, #directions{
     padding-left: 1em;
     list-style-type: none;
 }

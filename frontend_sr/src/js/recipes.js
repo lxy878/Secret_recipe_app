@@ -44,7 +44,10 @@ class Recipes{
         buttonView.innerText = 'View'
         buttonView.addEventListener('click', e=>{
             const id = e.target.parentElement.className
-            this.server.fetchForRecipe(id).then(json=> this.renderRecipe(new Recipe(json)))
+            this.server.fetchForRecipe(id).then(json=> {
+                if (json.error) return alert(json.error)
+                this.renderRecipe(new Recipe(json))
+            })
         })
         div.appendChild(buttonView)
     }
@@ -120,7 +123,6 @@ class Recipes{
                 this.addCreateForm(divForm);
                 recipesContainer.className ='';
             }
-            
         })
     }
 
@@ -169,6 +171,7 @@ class Recipes{
             const packege = this.collectData(form);
             // Post data
             this.server.fetchForCreate(packege).then(json=>{
+                if(json.error) return alert(json.error)
                 this.recipes.push(new Recipe(json))
                 this.renderRecipes();
             })
