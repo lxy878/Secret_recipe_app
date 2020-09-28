@@ -19,18 +19,18 @@ main{
 }
 
 #nav-items {
-    list-style-type: none;
+    /* list-style-type: none; */
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden;
     background-color: #333;
-    float: right;
+    float: right; */
 }
 
 li > button {
     width: 100%;
-    display: block;
+    /* display: block; */
     color: white;
     background-color: #333;
     padding: 15px 0px;
@@ -48,6 +48,10 @@ li button:hover {
     padding: 20px;
 }
 
+#createField input{
+    width: 100%;
+}
+
 #ingredients #ingredient{
     padding: 0px 10px;
     border: solid black 1px;
@@ -63,19 +67,33 @@ textarea#recipe_directions{
 }
 
 #word_wrap{
-    margin: 0px;
+    margin: 0px 0px 5px 0px;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
-    max-width: 100%;
+    /* max-width: 100%; */
     line-height: 20px;
     max-height: 40px;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
+    /* -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical; */
 }
-
+#word_wrap, #inform{
+    /* margin: 0; */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    /* line-height: 20px;
+    max-height: 40px;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical; */
+    /* max-width: 100%; */
+}
 #inform{
-    margin: 0px;
+    margin: 0;
+    line-height: 20px;
+    max-height: 20px;
+    /* -webkit-line-clamp: 6; */
+    /* -webkit-box-orient: vertical; */
 }
 
 #item_buttons{
@@ -103,13 +121,14 @@ textarea#recipe_directions{
 
 #item-detail{
     padding: 5px 8px;
-    height: 10%;
+    /* height: 10%; */
 }
 
 #recipe_container{
     padding: 20px 0px;
     border-radius: 1em;
     background-color: rgb(240, 240, 240);
+    text-align: center;
 }
 
 #recipe_container > #recipe_title{
@@ -117,17 +136,20 @@ textarea#recipe_directions{
     font-family: American Typewriter, serif;
     font-weight: normal;
     font-style: italic;
-    text-align: center;
+    /* text-align: center; */
     padding: 0px 200px;
 }
 
-#recipe_image{
-    width: 60%;
-    padding: 0px 15em;
+#recipe_container > #recipe_image{
+    /* width: 300px; */
+    height: 450px;
+    /* padding: 0px 15em; */
 }
 
 #recipe_details{
     margin: auto 15em;
+    text-align: left;
+    border-bottom: gray 1px solid;
 }
 
 

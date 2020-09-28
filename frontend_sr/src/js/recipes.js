@@ -3,7 +3,6 @@ class Recipes{
         this.recipes = [];
         this.server = new Server();
         this.createButton();
-        // get recipe 
     }
 
     // show all recipes 
@@ -21,7 +20,7 @@ class Recipes{
         this.recipes.forEach((recipe, index) =>{
             const newDiv = document.createElement('div')
             newDiv.id = 'item'
-            // move to object
+            // TODO: move to object
             newDiv.innerHTML = `
                 <img src=${recipe.imageUrl} alt="Image">
                 <div id='item-detail'>
@@ -55,7 +54,7 @@ class Recipes{
         recipeContainer.innerHTML = ''
         recipeContainer.hidden = false;
         recipeContainer.className = recipe.id
-        // move to object
+        // TODO: move to object
         recipeContainer.innerHTML = `
             <h1 id='recipe_title'>${recipe.name}</h1>
             <img src="${recipe.imageUrl}" alt="No Image" id='recipe_image'>
@@ -130,13 +129,13 @@ class Recipes{
     }
 
     addCreateForm(element){
-        // move to object
+        // TODO: move to object
         element.innerHTML = `
             <form id='createField'>
-                <p>Name: <input type="text" id='recipe_name'></p>
-                <p>Meal: <input type="text" id='recipe_meal' required></p>
-                <p>Serving: <input type="text" id='recipe_serving'></p>
-                <p>Image Link: <input type="text" id='recipe_image_url'></p>
+                <p>Name: <input type="text" id='recipe_name' placeholder='Recipe name....'></p>
+                <p>Meal: <input type="text" id='recipe_meal' placeholder='Type of meals....' required></p>
+                <p>Serving: <input type="text" id='recipe_serving' placeholder='Number of people.....'></p>
+                <p>Image Link: <input type="text" id='recipe_image_url' placeholder='Image Link....'></p>
                 <div id='ingredients'><p>Ingredients:</p></div><br>
                 <button id='add_ingredient'>More ingredients</button>
                 <p>Directions: <textarea  id='recipe_directions'></textarea></p>
@@ -146,7 +145,7 @@ class Recipes{
         this.addIngEvent();
         this.addSubmitEvent();
     }
-    
+
     addIngEvent(){
         const buttonAddIng = document.querySelector('button#add_ingredient')
         buttonAddIng.addEventListener('click', e=>{
@@ -155,9 +154,9 @@ class Recipes{
             const newDiv = document.createElement('div');
             newDiv.id = 'ingredient'
             newDiv.innerHTML = `            
-                <p>Name: <input type="text" id='ingredient_name' ></p>
-                <p>Qty: <input type="number" id='ingredient_qty' ></p>
-                <p>Unit: <input type="text" id='ingredient_unit'></p>
+                <p>Name: <input type="text" id='ingredient_name' placeholder='Ingredient name....'></p>
+                <p>Qty: <input type="number" id='ingredient_qty' placeholder='Number of ingredient....'></p>
+                <p>Unit: <input type="text" id='ingredient_unit' placeholder='Measure of ingredient....'></p>
             `;
             divIngs.appendChild(newDiv)
         })
@@ -182,18 +181,19 @@ class Recipes{
 
     collectData(form){
         const data = {'recipe':{}, 'meal':{}}
+
         // collect recipe attributes
         form.querySelectorAll(`[id*=recipe]`).forEach(e=> {
             const key = e.id.split('recipe_')[1]
             if(key === 'meal'){
-                // if meal is empty
                 data[key] = {name: e.value}
             }else{
-                // the attribute is empty
                 data.recipe[key] = e.value
             }
         })
+        if (!data.recipe.image_url) data.recipe.image_url = './src/images/no_image.jpeg' 
         data.ingredients = []
+
         // collect ingredients' attributes
         form.querySelectorAll(`[id=ingredient]`).forEach(ingredient=>{
             const newIng = {}

@@ -39,10 +39,9 @@ class RecipesController < ApplicationController
 
         # ingredients permit and looping
         newRecipe.create_ingredients(ingredients_params)
-
         if newRecipe.save
         # fix: move to model
-            render json: recipes.to_json(
+            render json: newRecipe.to_json(
                 include:{
                     meal: {
                         only: [:name, :id]
@@ -63,9 +62,9 @@ class RecipesController < ApplicationController
         if recipe
             name = recipe.name
             recipe.destroy
-            render json: {message: "#{name} is deleted"}
+            render json: {message: "Deleted"}
         else
-            # add details
+            # TODO: add details
             render json: {error: 'Something wrong'}.to_json()
         end
 
@@ -87,21 +86,6 @@ class RecipesController < ApplicationController
 
 
     def recipe_params
-        # <ActionController::Parameters {
-        #     "authenticity_token"=>"KeEmysICyJ2GNbLC2WoGViKrbLzCiZniRXmQ06tbJsMtLXpvqfZDU/dP9YHNE2WMd7sSRXQ+U34vje7E7QBIVw==",
-        #      "commercial"=>{
-        #          "title"=>"sdfdf", 
-        #          "description"=>"dfdfdf",
-        #         "state_attributes"=>{
-        #             "name"=>"North Carolina"
-        #         }
-        #     },
-        #     "commit"=>"Create Commercial",
-        #     "controller"=>"commercials",
-        #     "action"=>"create"
-        # } permitted: false>
-        
-        # params.require(:commercial).permit(:title, :description, state_attributes:[:name])
         params.require(:recipe).permit(:name, :serving, :image_url, :directions)
     end
 end
