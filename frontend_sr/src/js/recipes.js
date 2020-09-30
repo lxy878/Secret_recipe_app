@@ -20,16 +20,7 @@ class Recipes{
         this.recipes.forEach((recipe, index) =>{
             const newDiv = document.createElement('div')
             newDiv.id = 'item'
-            // TODO: move to object
-            newDiv.innerHTML = `
-                <img src=${recipe.imageUrl} alt="Image">
-                <div id='item-detail'>
-                    <h4 id='word_wrap'>${recipe.name}</h4>
-                    <p id='inform'>serving: ${recipe.serving}</p>
-                    <p id='inform'>meal: ${recipe.meal.name}</p>
-                    <div id='item_buttons' class='${recipe.id}' array_index='${index}'><div>
-                </div>
-            `;  
+            newDiv.innerHTML = recipe.recipeItem(index);
             const divButtons = newDiv.querySelector('div#item_buttons')
             this.addEventView(divButtons)
             this.addEventDelete(divButtons)
@@ -57,29 +48,7 @@ class Recipes{
         recipeContainer.innerHTML = ''
         recipeContainer.hidden = false;
         recipeContainer.className = recipe.id
-        // TODO: move to object
-        recipeContainer.innerHTML = `
-            <h1 id='recipe_title'>${recipe.name}</h1>
-            <img src="${recipe.imageUrl}" alt="No Image" id='recipe_image'>
-            <div id='recipe_details'>
-                <p><strong><span>Meal: </span></strong>${recipe.meal.name}</p>
-                <p><strong><span>Serving People: </span></strong> ${recipe.serving}</p>
-            </div>
-
-            <div id='recipe_details'>
-                <h3>Ingredients:</h3>
-                <ul id='ingredients'>
-                </ul>
-                <h3>Directions: </h3>
-                <p id='directions'>${recipe.directions}</p>
-            </div>
-        `
-        const ingsList = recipeContainer.querySelector('ul#ingredients')
-        recipe.ingredients.forEach(ing => {
-            const li = document.createElement('li')
-            li.innerHTML = `<li>${ing.name} (<strong><span>${ing.qty}</span> <span>${ing.unit}</span></strong>)</li>`
-            ingsList.appendChild(li)
-        })
+        recipeContainer.innerHTML = recipe.recipeDetails()
     }
 
     // delete a recipe
@@ -88,8 +57,7 @@ class Recipes{
         const recipeContainer = document.getElementById('recipe_container')
         buttonDelete.innerText = 'Delete'
         buttonDelete.addEventListener('click', e=>{
-            const id = e.target.parentElement.className
-            
+            const id = e.target.parentElement.className 
             this.server.fetchForDelete(id).then(json => {
                 if (json.message){
                     alert(json.message)
@@ -125,29 +93,23 @@ class Recipes{
             }
         })
     }
-
-    removeCreateForm(element){
-        element.removeChild(element.firstElementChild)
-    }
-
+    
     addCreateForm(element){
-        // TODO: move to object
         element.innerHTML = `
             <form id='createField'>
-                <p>Name: <input type="text" id='recipe_name' placeholder='Recipe name....'></p>
-                <p>Meal: <input type="text" id='recipe_meal' placeholder='Type of meals....' required></p>
-                <p>Serving: <input type="text" id='recipe_serving' placeholder='Number of people.....'></p>
-                <p>Image Link: <input type="text" id='recipe_image_url' placeholder='Image Link....'></p>
-                <div id='ingredients'><p>Ingredients:</p></div><br>
-                <button id='add_ingredient'>More ingredients</button>
-                <p>Directions: <textarea  id='recipe_directions'></textarea></p>
-                <input type='submit', value='Create'>
-            </form>
-        `;
+            <p>Name: <input type="text" id='recipe_name' placeholder='Recipe name....'></p>
+            <p>Meal: <input type="text" id='recipe_meal' placeholder='Type of meals....' required></p>
+            <p>Serving: <input type="text" id='recipe_serving' placeholder='Number of people.....'></p>
+            <p>Image Link: <input type="text" id='recipe_image_url' placeholder='Image Link....'></p>
+            <div id='ingredients'><p>Ingredients:</p></div><br>
+            <button id='add_ingredient'>More ingredients</button>
+            <p>Directions: <textarea  id='recipe_directions'></textarea></p>
+            <input type='submit', value='Create'>
+            </form>`;
         this.addIngEvent();
         this.addSubmitEvent();
     }
-
+    
     addIngEvent(){
         const buttonAddIng = document.querySelector('button#add_ingredient')
         buttonAddIng.addEventListener('click', e=>{
@@ -156,10 +118,9 @@ class Recipes{
             const newDiv = document.createElement('div');
             newDiv.id = 'ingredient'
             newDiv.innerHTML = `            
-                <p>Name: <input type="text" id='ingredient_name' placeholder='Ingredient name....'></p>
-                <p>Qty: <input type="number" id='ingredient_qty' placeholder='Number of ingredient....'></p>
-                <p>Unit: <input type="text" id='ingredient_unit' placeholder='Measure of ingredient....'></p>
-            `;
+            <p>Name: <input type="text" id='ingredient_name' placeholder='Ingredient name....'></p>
+            <p>Qty: <input type="number" id='ingredient_qty' placeholder='Number of ingredient....'></p>
+            <p>Unit: <input type="text" id='ingredient_unit' placeholder='Measure of ingredient....'></p>`;
             divIngs.appendChild(newDiv)
         })
     }
@@ -175,16 +136,16 @@ class Recipes{
                 this.recipes.push(new Recipe(json))
                 this.renderRecipes();
             })
-
+            
             document.querySelector('button#create_button').innerText = 'Create New Recipe';
             document.querySelector('#recipes_container').className = 'extend_container'
             this.removeCreateForm(document.querySelector('div#form_render'));
         })
     }
-
+    
     collectData(form){
         const data = {'recipe':{}, 'meal':{}}
-
+        
         // collect recipe attributes
         form.querySelectorAll(`[id*=recipe]`).forEach(e=> {
             const key = e.id.split('recipe_')[1]
@@ -196,7 +157,7 @@ class Recipes{
         })
         if (!data.recipe.image_url) data.recipe.image_url = './src/images/no_image.jpeg' 
         data.ingredients = []
-
+        
         // collect ingredients' attributes
         form.querySelectorAll(`[id=ingredient]`).forEach(ingredient=>{
             const newIng = {}
@@ -206,4 +167,7 @@ class Recipes{
         return data
     }
 
+    removeCreateForm(element){
+        element.removeChild(element.firstElementChild)
+    }
 }

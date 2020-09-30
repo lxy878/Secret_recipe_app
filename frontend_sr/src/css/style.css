@@ -46,8 +46,8 @@ li button:hover {
     width: 100%;
 }
 
-#ingredients #ingredient, #createField{
-    padding: 0px 10px;
+#ingredients #ingredient{
+    padding: 0px 15px;
     border: solid black 1px;
 }
 
