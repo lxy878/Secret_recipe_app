@@ -2,52 +2,22 @@ class RecipesController < ApplicationController
 
     def index
         recipes = Recipe.all
-        # fix: move to model
-        render json: recipes.to_json(
-            include:{
-                meal: {
-                    only: [:name, :id]
-                }
-            }, except: [:meal_id, :created_at, :updated_at]
-        )
+        render json: RecipeSerializer.new(recipes).index_json
     end
 
     def show
         recipe = Recipe.find_by(id: params[:id])
         if recipe
-            # fix: move to model
-            render json: recipe.to_json(include: {
-                meal: {
-                    only: [:name, :id]
-                },
-                ingredients: {
-                    only: [:id, :name, :qty, :unit]
-                }
-            }, 
-            except: [:created_at, :updated_at, :meal_id])
+            render json: RecipeSerializer.new(recipe).show_json
         else
             render json: {error: "Recipe doesn't exist."}.to_json()
         end
     end
 
     def create
-        # refactor and fix when image and meal are empty
-        # find or create meal
-        meal = Meal.find_or_create_by(meal_params)
-        newRecipe = Recipe.new(recipe_params)
-        newRecipe.meal = meal
-
-        # ingredients permit and looping
-        newRecipe.create_ingredients(ingredients_params)
+        newRecipe = Recipe.create_recipe(meal_params, recipe_params, ingredients_params)
         if newRecipe.save
-        # fix: move to model
-            render json: newRecipe.to_json(
-                include:{
-                    meal: {
-                        only: [:name, :id]
-                    }
-                }, except: [:meal_id, :created_at, :updated_at]
-            )
+            render json: RecipeSerializer.new(newRecipe).index_json
         else
             render json: {error: 'Create new recipe failed'}.to_json()
         end
@@ -65,10 +35,6 @@ class RecipesController < ApplicationController
     end
 
     private
-
-    def params_permit(key, *args)
-        # params.require(key).permit()  
-    end
 
     def ingredients_params
         params.permit(ingredients:[:name, :qty, :unit])
