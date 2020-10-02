@@ -23,3 +23,4 @@ Frontend: Javascript, HTML/CSS
 
 # License
 
+<a href='https://github.com/lxy878/Secret_recipe_app/blob/master/LICENSE'>MIT License</a>
