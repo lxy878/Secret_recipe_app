@@ -1,24 +1,25 @@
-# README
+# Secret Recipe Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Are you excellent chefs, cooks, or the people who love cooking? Do you have a lot of inspirations for handling food in innovative ways? Thus, you write every detail down a piece of paper. However, these recipes are vulnerable to many situations such as water, fire, or humans. Now, Secret Recipe can solve your problems. Secret Recipe is a web application that can store your recipes on the server.  Secret Recipe application keeps your secret recipes in safe.  
 
-Things you may want to cover:
+# Tech/framework used
 
-* Ruby version
+## Built with
 
-* System dependencies
+Backend: Ruby on Rails (as API)
+Frontend: Javascript, HTML/CSS
 
-* Configuration
+# Installation
 
-* Database creation
+1. Run server (./backend_sr)
 
-* Database initialization
+    $ rails s
 
-* How to run the test suite
+2. Run index.html (./frontend_sr) in any brower 
 
-* Services (job queues, cache servers, search engines, etc.)
+# Demo
 
-* Deployment instructions
+<a href='https://drive.google.com/file/d/1TGQ-SGi8VI56s9io47EeDb-Xjjl7sSMR/view?usp=sharing'>Demo Link</a>
 
-* ...
+# License
+
