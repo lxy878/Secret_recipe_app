@@ -10,7 +10,7 @@ class Recipes{
         this.server.fetchForRecipes().then(json=>{
             json.forEach(recipe => {
                 this.recipes.push(new Recipe(recipe)); 
-                // ---------- soluation for the review problem  ---------
+                // ---------- solution for the review problem  ---------
                 this.recipes = this.recipes.sort((a,b)=>{
                     if (a.name > b.name)
                         return 1    
@@ -19,7 +19,7 @@ class Recipes{
                     else 
                         return 0
                 });
-                // ---------- soluation for the review problem  ---------
+                // ---------- solution for the review problem  ---------
             });
         }).then(()=>this.renderRecipes())
     }
